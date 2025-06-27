@@ -1,23 +1,8 @@
-# OrariAperti
+# M347
 
-OrariAperti is a multi-user room reservation system built with Spring Boot (Java) for the backend and React (TypeScript, Vite) for the frontend.
+This repository contains [the source code of OrariAperti (M223)](https://github.com/IMS-coding-projects/M223). The only change is that you can deploy OrariAperti faster and better now via Docker. Run the [`docker-compose.yml`](./docker-compose.yml) via `docker compose up`.
 
-## Project Structure
-
-- [`backend`](./OrariAperti/backend): Spring Boot backend REST API and static resources
-- [`frontend`](./OrariAperti/frontend): React + TypeScript + Vite + Tailwind + Shadcn/ui frontend app
-
-## Getting Started
-
-See the [backend README](./OrariAperti/backend/README.md) and [frontend README](./OrariAperti/frontend/README.md) for setup and usage instructions.
-
-## Features
-
-- Create, view, update, and delete room reservations
-- Private and public keys for secure reservation access
-- Responsive UI
-- Validation for overlapping reservations
-- and many more
+For more information check out [the originial repository](https://github.com/IMS-coding-projects/M223)
 
 ## License
 

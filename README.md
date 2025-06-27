@@ -1,9 +1,24 @@
-# M347
+# M347 – OrariAperti Dockerized
 
-This repository contains [the source code of OrariAperti (M223)](https://github.com/IMS-coding-projects/M223). The only change is that you can deploy OrariAperti faster and better now via Docker. Run the [`docker-compose.yml`](./docker-compose.yml) via `docker compose up`.
+This repository provides a Dockerized version of [OrariAperti (M223)](https://github.com/IMS-coding-projects/M223), allowing for faster and more reliable deployment using Docker.
 
-For more information check out [the originial repository](https://github.com/IMS-coding-projects/M223)
+The application itself remains unchanged - the improvement lies in simplified deployment through Docker Compose.
 
-## License
+## 🚀 Quick Start
 
-This project is licensed under the [GNU General Public License v3.0](./LICENSE). Refer to the license file for more details.
+1. Clone this repository
+   `git clone https://github.com/your-username/M347.git`
+2. Rename `.env.example` to `.env`
+3. Start the containers
+   `docker compose up -d`
+
+The app will be up and running shortly.
+
+## 🔗 Original Project
+
+For more details about the app itself, visit the [original OrariAperti repository](https://github.com/IMS-coding-projects/M223).
+
+## 📄 License
+
+This project is licensed under the [GNU General Public License v3.0](./LICENSE).
+See the license file for more info.

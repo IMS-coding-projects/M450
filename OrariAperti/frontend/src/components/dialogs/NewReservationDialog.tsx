@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { Label } from "@/components/ui/label.tsx";
 import {
     Popover,
@@ -47,11 +47,11 @@ export default function NewReservationDialog() {
         reValidateMode: "onChange",
     });
 
-    const [rooms, setRooms] = useState<Room[]>([]);
-    const [loadingRooms, setLoadingRooms] = useState(false);
-    const [dialogOpen, setDialogOpen] = useState(false);
+    const [rooms, setRooms] = React.useState<Room[]>([]);
+    const [loadingRooms, setLoadingRooms] = React.useState(false);
+    const [dialogOpen, setDialogOpen] = React.useState(false);
 
-    useEffect(() => {
+    React.useEffect(() => {
         setLoadingRooms(true);
         axios
             .get(import.meta.env.VITE_APP_BACKEND_URL + "/api/room")

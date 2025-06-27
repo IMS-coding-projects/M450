@@ -15,20 +15,5 @@ export default defineConfig({
     host: "localhost",
     port: 3000,
     strictPort: true,
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react')) return 'vendor-react'
-            if (id.includes('@radix-ui')) return 'vendor-radix'
-            if (id.includes('lucide-react')) return 'vendor-lucide'
-            if (id.includes('recharts')) return 'vendor-recharts'
-            return 'vendor'
-          }
-        },
-      },
-    },
-  },
+  }
 })

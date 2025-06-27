@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
     Card,
     CardHeader,
@@ -10,7 +11,6 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
-import {useState, useEffect} from "react";
 import type {Reservation, Room, ReservationDTO} from "@/types/types";
 import NewReservationDialog from "@/components/dialogs/NewReservationDialog";
 import {toast} from "sonner";
@@ -39,11 +39,11 @@ function formatDateString(dateString: string | Date): string {
 }
 
 export default function CurrentReservation({reservation}: { reservation?: Reservation }) {
-    const [editing, setEditing] = useState(false);
-    const [saving, setSaving] = useState(false);
-    const [deleting, setDeleting] = useState(false);
-    const [rooms, setRooms] = useState<Room[]>([]);
-    const [loadingRooms, setLoadingRooms] = useState(false);
+    const [editing, setEditing] = React.useState(false);
+    const [saving, setSaving] = React.useState(false);
+    const [deleting, setDeleting] = React.useState(false);
+    const [rooms, setRooms] = React.useState<Room[]>([]);
+    const [loadingRooms, setLoadingRooms] = React.useState(false);
 
     const isPrivate = !!reservation && (document.querySelector<HTMLInputElement>('#privateKey')?.value === reservation.privateKey);
 
@@ -69,7 +69,7 @@ export default function CurrentReservation({reservation}: { reservation?: Reserv
             : undefined,
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (editing) {
             setLoadingRooms(true);
             fetch(`${API_URL}/api/room`)
@@ -80,7 +80,7 @@ export default function CurrentReservation({reservation}: { reservation?: Reserv
         }
     }, [editing]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         // Reset form when reservation changes
         if (reservation) {
             reset({

@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
     Card,
     CardContent,
@@ -9,7 +10,6 @@ import {
 import {Input} from "@/components/ui/input.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import { useEffect, useState } from "react";
 import type { Reservation } from "@/types/types";
 import { toast } from "sonner";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
@@ -26,11 +26,11 @@ export default function AccessKeys({
     onReservationLoaded?: (reservation: Reservation) => void;
     onLoad?: () => void;
 }) {
-    const [privateKey, setPrivateKey] = useState(initialPrivateKey || "");
-    const [publicKey, setPublicKey] = useState(initialPublicKey || "");
-    const [loading, setLoading] = useState(false);
+    const [privateKey, setPrivateKey] = React.useState(initialPrivateKey || "");
+    const [publicKey, setPublicKey] = React.useState(initialPublicKey || "");
+    const [loading, setLoading] = React.useState(false);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if ((initialPrivateKey || initialPublicKey) && !loading) {
             handleSubmit();
         }

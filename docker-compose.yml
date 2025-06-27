@@ -1,0 +1,59 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: orariaperti-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - orariaperti-net
+
+  backend:
+    build:
+      context: ./OrariAperti/backend
+    container_name: orariaperti-backend
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:${MYSQL_PORT}/${MYSQL_DATABASE}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      FRONTEND_URL: http://localhost:${FRONTEND_PORT}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_APPLICATION_NAME: OrariAperti
+    ports:
+      - "${BACKEND_PORT}:8080"
+    depends_on:
+      - db
+    networks:
+      - orariaperti-net
+
+  frontend:
+    build:
+      context: ./OrariAperti/frontend
+    container_name: orariaperti-frontend
+    restart: unless-stopped
+    environment:
+      VITE_APP_BACKEND_URL: http://localhost:${BACKEND_PORT}
+    ports:
+      - "${FRONTEND_PORT}:3000"
+    depends_on:
+      - backend
+    networks:
+      - orariaperti-net
+
+volumes:
+  db_data:
+
+networks:
+  orariaperti-net:
+    driver: bridge

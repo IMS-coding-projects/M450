@@ -2,7 +2,7 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY . .
-CMD ["mv", ".env.example", ".env"]
+RUN mv .env.example .env
 RUN npm install --force
 RUN npm run build
 

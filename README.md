@@ -10,7 +10,7 @@ Dieses Repository enthält eine Docker-Version von [OrariAperti (M223)](https://
 
 OrariAperti ist ein Mehrbenutzer-Raumreservierungssystem, das mit Spring Boot (Java) für das Backend und React (TypeScript, Vite) für das Frontend erstellt wurde.
 
-Die Anwendung selbst bleibt unverändert – die Verbesserung besteht in der vereinfachten Bereitstellung durch Docker Compose.
+Die Anwendung selbst bleibt unverändert, die Verbesserung besteht in der vereinfachten Bereitstellung durch Docker Compose.
 
 ## 🚀 Schnellstart
 

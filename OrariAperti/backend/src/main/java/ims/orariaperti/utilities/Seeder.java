@@ -109,7 +109,7 @@ public class Seeder implements CommandLineRunner {
                         UUID.randomUUID(),
                         UUID.randomUUID()
                 ));
-                System.out.println("Sample Reservations have been added to the database.");
+                System.out.println("Sample Reservations have been added to the database. If you are running this project with Docker and no container failed, you can visit the website now on http://localhost:[FRONTEND_PORT YOU'VE SET IN THE .ENV]");
             }
         }
     }

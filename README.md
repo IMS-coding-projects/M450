@@ -58,6 +58,9 @@ Diese Einrichtung besteht aus drei Diensten:
 
 * **Image**: `mysql:8.0`
 
+   * **Warum?**
+   MySQL 8.0 ist eine stabile und weit verbreitete relationale Open-Source-Datenbank. Sie bietet eine robuste Leistung und ist vollständig kompatibel mit Spring Boot JPA.
+
 * **Umgebungsvariablen**: Werden aus Sicherheits- und Flexibilitätsgründen über `.env` verwaltet.
 
 * **Volumes**: Verwendet ein benanntes Volume (`db_data`) zur Speicherung von Daten.

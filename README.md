@@ -26,10 +26,10 @@ Dieses Setup dient zum:
 1. Repository klonen
 
    ```bash
-   git clone https://github.com/IMS-coding-projects/M347.git
+   git clone https://github.com/IMS-coding-projects/M450.git
    ```
 
-2. `.env.example` → `.env` umbenennen
+2. `.env.example` → `.env` umbenennen / kopieren und dann umbenennen
 
 3. Container starten
 

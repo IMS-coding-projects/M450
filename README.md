@@ -1,43 +1,43 @@
 # 🧪 OrariAperti – Testing Setup (JUnit + React Testing Library)
 
-Dieses Repository erweitert die dockerisierte Full-Stack-Anwendung um **automatisierte Tests** für Backend und Frontend.
+This repository extends the dockerized full-stack application with **automated tests** for both backend and frontend.
 
-Die Anwendung besteht weiterhin aus:
+The application still consists of:
 
-* **MySQL-Datenbank**
-* **Spring Boot Backend (mit JUnit)**
-* **React Frontend (mit @testing-library/react)**
-
----
-
-## 🎯 Ziel
-
-Dieses Setup dient zum:
-
-* Testen von Backend-Logik mit **JUnit**
-* Testen von UI-Komponenten mit **React Testing Library**
-* Sicherstellen der Funktionalität vor Deployment
-* Integration in CI/CD-Pipelines
+* **MySQL database**
+* **Spring Boot backend (with JUnit)**
+* **React frontend (with @testing-library/react)**
 
 ---
 
-## 🚀 Schnellstart (inkl. Tests)
+## 🎯 Goal
 
-1. Repository klonen
+This setup is used for:
+
+* Testing backend logic with **JUnit**
+* Testing UI components with **React Testing Library**
+* Ensuring functionality before deployment
+* Integration into CI/CD pipelines
+
+---
+
+## 🚀 Quick Start (including tests)
+
+1. Clone the repository
 
    ```bash
    git clone https://github.com/IMS-coding-projects/M450.git
    ```
 
-2. `.env.example` → `.env` umbenennen / kopieren und dann umbenennen
+2. Rename or copy `.env.example` to `.env`
 
-3. Container starten
+3. Start the containers
 
    ```bash
    docker compose up -d
    ```
 
-4. Tests ausführen
+4. Run tests
 
    **Backend (JUnit):**
 
@@ -55,15 +55,15 @@ Dieses Setup dient zum:
 
 ## 🧪 Backend Testing – JUnit
 
-Das Backend verwendet **JUnit 5** für Unit- und Integrationstests.
+The backend uses **JUnit 5** for unit and integration tests.
 
-### 🔧 Technologien
+### 🔧 Technologies
 
 * JUnit 5
 * Spring Boot Test
-* Mockito (für Mocks)
+* Mockito (for mocks)
 
-### 📁 Struktur
+### 📁 Structure
 
 ```bash
 backend/
@@ -74,13 +74,13 @@ backend/
 │       │   └── ...Tests
 ```
 
-### ▶️ Test ausführen
+### ▶️ Run tests
 
 ```bash
 mvn test
 ```
 
-### ✅ Beispiel
+### ✅ Example
 
 ```java
 @SpringBootTest
@@ -97,15 +97,15 @@ class RoomServiceTest {
 
 ## ⚛️ Frontend Testing – React Testing Library
 
-Das Frontend verwendet **@testing-library/react** für komponentenbasierte Tests.
+The frontend uses **@testing-library/react** for component-based tests.
 
-### 🔧 Technologien
+### 🔧 Technologies
 
 * @testing-library/react
 * @testing-library/jest-dom
-* Vitest oder Jest (abhängig von Setup)
+* Vitest or Jest (depending on setup)
 
-### 📁 Struktur
+### 📁 Structure
 
 ```bash
 frontend/
@@ -115,13 +115,13 @@ frontend/
 │   │   └── ...
 ```
 
-### ▶️ Test ausführen
+### ▶️ Run tests
 
 ```bash
 npm run test
 ```
 
-### ✅ Beispiel
+### ✅ Example
 
 ```tsx
 import { render, screen } from '@testing-library/react';
@@ -137,28 +137,28 @@ test('renders headline', () => {
 
 ## 🐳 Docker & Testing
 
-Tests können direkt innerhalb der Container ausgeführt werden:
+Tests can be executed directly inside the containers:
 
 | Service  | Command                                     |
 | -------- | ------------------------------------------- |
 | Backend  | `docker compose exec backend mvn test`      |
 | Frontend | `docker compose exec frontend npm run test` |
 
-👉 Vorteil:
+👉 Advantage:
 
-* Gleiche Umgebung für alle Entwickler
-* Keine lokalen Abhängigkeitsprobleme
+* Same environment for all developers
+* No local dependency issues
 
 ---
 
 ## 🔄 Continuous Integration (optional)
 
-Empfohlen:
+Recommended:
 
-* Tests automatisch bei jedem Push ausführen
-* Integration mit GitHub Actions
+* Run tests automatically on every push
+* Integration with GitHub Actions
 
-Beispiel:
+Example:
 
 ```yaml
 - name: Run Backend Tests
@@ -170,32 +170,24 @@ Beispiel:
 
 ---
 
-## 📦 Unveränderte Struktur
+## 📦 Unchanged Structure
 
-Die eigentliche Anwendung bleibt identisch mit dem Originalprojekt:
+The actual application remains identical to the original project:
 👉 [https://github.com/IMS-coding-projects/M223](https://github.com/IMS-coding-projects/M223)
 
 ---
 
-## 📁 Wichtige Hinweise
+## 📁 Important Notes
 
-* `.env` muss vorhanden sein
-* Datenbank muss laufen für Integrationstests
-* Frontend-Tests laufen unabhängig vom Backend
+* `.env` must exist
+* Database must be running for integration tests
+* Frontend tests run independently from the backend
 
 ---
 
-## 📚 Referenzen
+## 📚 References
 
 * JUnit 5
 * React Testing Library
 * Spring Boot Testing
 * Docker Compose
-
----
-
-If you want, I can also:
-
-* add **integration tests with Testcontainers**
-* or set up a **full CI pipeline (GitHub Actions ready)**
-* or include **coverage reports (JaCoCo + Vitest coverage)**

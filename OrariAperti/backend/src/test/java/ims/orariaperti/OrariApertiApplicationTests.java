@@ -8,6 +8,7 @@ class OrariApertiApplicationTests {
 
     @Test
     void contextLoads() {
+        // this is a test that checks if the app can actually even start.
     }
 
 }

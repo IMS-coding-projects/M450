@@ -30,6 +30,10 @@ jobs:
         distribution: 'temurin'
         cache: 'maven'
 
+    - name: Test with Maven
+      run: mvn test
+      working-directory: ./OrariAperti/backend
+
     - name: Build with Maven
       run: mvn spring-boot:run
       working-directory: ./OrariAperti/backend

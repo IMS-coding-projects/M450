@@ -318,7 +318,7 @@ The goal of testing is to verify that the OrariAperti application behaves correc
 | **Steps** | 1. Open app, 2. Click "New Reservation", 3. Fill in all fields, 4. Submit |
 | **Expected Result** | Success dialog with `privateKey` and `publicKey` displayed |
 | **Method** | Automated Vitest test |
-| **Status** | ⬜ Coming Soon |
+| **Status** | ✅ Implemented |
 
 ---
 
@@ -332,7 +332,7 @@ The goal of testing is to verify that the OrariAperti application behaves correc
 | **Steps** | 1. Enter publicKey in lookup field, 2. Submit |
 | **Expected Result** | Reservation details shown (read-only: no edit/delete options) |
 | **Method** | Automated Vitest test |
-| **Status** | ⬜ Coming Soon |
+| **Status** | ✅ Implemented |
 
 ---
 
@@ -346,7 +346,7 @@ The goal of testing is to verify that the OrariAperti application behaves correc
 | **Steps** | 1. Enter privateKey in lookup field, 2. Submit |
 | **Expected Result** | Reservation shown with edit and delete options enabled |
 | **Method** | Automated Vitest test |
-| **Status** | ⬜ Coming Soon |
+| **Status** | ✅ Implemented |
 
 ---
 
@@ -360,7 +360,7 @@ The goal of testing is to verify that the OrariAperti application behaves correc
 | **Steps** | 1. Click Delete, 2. Confirm in dialog |
 | **Expected Result** | Reservation removed; UI resets |
 | **Method** | Automated Vitest test |
-| **Status** | ⬜ Coming Soon |
+| **Status** | ✅ Implemented |
 
 ---
 

@@ -16,6 +16,7 @@ export default defineConfig({
         port: 3000,
         strictPort: true,
     },
+    // @ts-expect-error: Vitest is not yet fully typed in Vite's config
     test: {
         environment: 'jsdom',
         globals: true,

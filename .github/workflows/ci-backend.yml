@@ -35,5 +35,5 @@ jobs:
       working-directory: ./OrariAperti/backend
 
     - name: Build with Maven
-      run: mvn spring-boot:run
+      run: mvn -DskipTests package
       working-directory: ./OrariAperti/backend

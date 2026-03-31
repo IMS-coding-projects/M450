@@ -22,35 +22,29 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
-
-    - name: Set up Maven
-      uses: actions/setup-java@v3
-      with:
-        java-version: '21'
-        distribution: 'temurin'
         cache: 'maven'
 
     - name: Set up application.properties for testing
       run: |
         mkdir -p ./OrariAperti/backend/src/test/resources
-        touch ./OrariAperti/backend/src/test/resources/application.properties
-        echo "# Test Configuration" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "## General" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "spring.application.name=${SPRING_APPLICATION_NAME:OrariAperti}" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "## Database" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL" >> ./OrariAperti/backend/src/test/resources/application.properties
-        echo "spring.datasource.driverClassName=org.h2.Driver" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "spring.datasource.username=sa" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "spring.datasource.password=" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "spring.jpa.hibernate.ddl-auto=create-drop" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "spring.sql.init.mode=never" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "# CORS and Redirect Configuration" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "frontend.url=${FRONTEND_URL:http://localhost:3000}" > ./OrariAperti/backend/src/test/resources/application.properties
-        echo "" > ./OrariAperti/backend/src/test/resources/application.properties
+        cat > ./OrariAperti/backend/src/test/resources/application.properties <<'EOF'
+        # Test Configuration
+
+        ## General
+        spring.application.name=${SPRING_APPLICATION_NAME:OrariAperti}
+
+        ## Database
+        spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL
+        spring.datasource.driverClassName=org.h2.Driver
+        spring.datasource.username=sa
+        spring.datasource.password=
+        spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+        spring.jpa.hibernate.ddl-auto=create-drop
+        spring.sql.init.mode=never
+
+        # CORS and Redirect Configuration
+        frontend.url=${FRONTEND_URL:http://localhost:3000}
+        EOF
 
     - name: Test with Maven
       run: mvn test

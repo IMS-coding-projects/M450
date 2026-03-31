@@ -32,6 +32,7 @@ jobs:
 
     - name: Set up application.properties for testing
       run: |
+        touch ./OrariAperti/backend/src/test/resources/application.properties
         echo "# Test Configuration" > ./OrariAperti/backend/src/test/resources/application.properties
         echo "" > ./OrariAperti/backend/src/test/resources/application.properties
         echo "## General" > ./OrariAperti/backend/src/test/resources/application.properties

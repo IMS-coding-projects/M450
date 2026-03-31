@@ -32,6 +32,7 @@ jobs:
 
     - name: Set up application.properties for testing
       run: |
+        mkdir -p ./OrariAperti/backend/src/test/resources
         touch ./OrariAperti/backend/src/test/resources/application.properties
         echo "# Test Configuration" > ./OrariAperti/backend/src/test/resources/application.properties
         echo "" > ./OrariAperti/backend/src/test/resources/application.properties

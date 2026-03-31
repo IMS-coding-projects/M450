@@ -21,19 +21,19 @@ export type Room = {
 };
 
 export type RoomFeature =
-    | "Beamer"
-    | "Water Tap"
-    | "Whiteboard"
-    | "Air Conditioning"
-    | "Projector Screen"
-    | "Speaker System"
-    | "Video Conferencing"
-    | "WiFi"
-    | "Power Outlets"
-    | "Natural Light"
-    | "Soundproofing"
-    | "Smart Board"
-    | "Telephone"
-    | "Coffee Machine"
-    | "Printer"
-    | "Lockers";
+    | 'Beamer'
+    | 'Water Tap'
+    | 'Whiteboard'
+    | 'Air Conditioning'
+    | 'Projector Screen'
+    | 'Speaker System'
+    | 'Video Conferencing'
+    | 'WiFi'
+    | 'Power Outlets'
+    | 'Natural Light'
+    | 'Soundproofing'
+    | 'Smart Board'
+    | 'Telephone'
+    | 'Coffee Machine'
+    | 'Printer'
+    | 'Lockers';

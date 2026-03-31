@@ -1,25 +1,21 @@
-import * as React from "react";
-import { Label } from "@/components/ui/label.tsx";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover.tsx";
-import { Button } from "@/components/ui/button.tsx";
-import { CalendarIcon, LucideEdit } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar.tsx";
+import * as React from 'react';
+import { Label } from '@/components/ui/label.tsx';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { CalendarIcon, LucideEdit } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar.tsx';
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select.tsx";
-import { Textarea } from "@/components/ui/textarea.tsx";
-import { Input } from "@/components/ui/input.tsx";
-import { type FieldErrors, useForm } from "react-hook-form";
-import type { ReservationDTO, Room } from "@/types/types.ts";
-import axios from "axios";
+} from '@/components/ui/select.tsx';
+import { Textarea } from '@/components/ui/textarea.tsx';
+import { Input } from '@/components/ui/input.tsx';
+import { type FieldErrors, useForm } from 'react-hook-form';
+import type { ReservationDTO, Room } from '@/types/types.ts';
+import axios from 'axios';
 import {
     Dialog,
     DialogClose,
@@ -29,10 +25,10 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog";
-import { format } from "date-fns";
-import { toast } from "sonner";
-import {FeatureBadge} from "../FeatureBadge.tsx";
+} from '@/components/ui/dialog';
+import { format } from 'date-fns';
+import { toast } from 'sonner';
+import { FeatureBadge } from '../FeatureBadge.tsx';
 
 export default function NewReservationDialog() {
     const {
@@ -43,8 +39,8 @@ export default function NewReservationDialog() {
         setValue,
         formState: { errors },
     } = useForm<ReservationDTO>({
-        mode: "onBlur",
-        reValidateMode: "onChange",
+        mode: 'onBlur',
+        reValidateMode: 'onChange',
     });
 
     const [rooms, setRooms] = React.useState<Room[]>([]);
@@ -54,25 +50,25 @@ export default function NewReservationDialog() {
     React.useEffect(() => {
         setLoadingRooms(true);
         axios
-            .get(import.meta.env.VITE_APP_BACKEND_URL + "/api/room")
+            .get(import.meta.env.VITE_APP_BACKEND_URL + '/api/room')
             .then((res) => setRooms(res.data))
-            .catch(() => toast.error("Failed to load rooms"))
+            .catch(() => toast.error('Failed to load rooms'))
             .finally(() => setLoadingRooms(false));
     }, []);
 
     const onSubmit = async (data: ReservationDTO) => {
         if (data.startTime && data.endTime && data.startTime >= data.endTime) {
-            toast.error("Start time must be before end time.");
+            toast.error('Start time must be before end time.');
             return;
         }
         if (!data.date) {
-            toast.error("Please select a date.");
+            toast.error('Please select a date.');
             return;
         }
 
         const now = new Date();
-        const [year, month, day] = data.date.split("-");
-        const [hour, minute] = data.startTime.split(":");
+        const [year, month, day] = data.date.split('-');
+        const [hour, minute] = data.startTime.split(':');
         const reservationStart = new Date(
             Number(year),
             Number(month) - 1,
@@ -81,7 +77,7 @@ export default function NewReservationDialog() {
             Number(minute)
         );
         if (reservationStart < now) {
-            toast.error("Reservation cannot be in the past.");
+            toast.error('Reservation cannot be in the past.');
             return;
         }
         const payload = {
@@ -95,29 +91,29 @@ export default function NewReservationDialog() {
         };
         try {
             const res = await axios.post(
-            import.meta.env.VITE_APP_BACKEND_URL + "/api/reservation",
-            payload
+                import.meta.env.VITE_APP_BACKEND_URL + '/api/reservation',
+                payload
             );
-            if (typeof res.data === "string" && res.status !== 200) {
+            if (typeof res.data === 'string' && res.status !== 200) {
                 // Backend returned an error as a string
                 toast.error(res.data);
                 return;
             }
-            toast.success("Reservation successfully created!");
+            toast.success('Reservation successfully created!');
             setDialogOpen(false);
             reset();
             // modify the current location URL to include the private key and reload the page
             const newUrl = new URL(window.location.href);
-            newUrl.searchParams.set("privateKey", res.data.privateKey);
-            window.history.pushState({}, "", newUrl.toString());
+            newUrl.searchParams.set('privateKey', res.data.privateKey);
+            window.history.pushState({}, '', newUrl.toString());
             window.location.reload();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             const errorMessage =
-            error?.response?.data?.error ||
-            error?.response?.data?.message ||
-            (typeof error?.response?.data === "string" ? error.response.data : undefined) ||
-            "Failed to create reservation";
+                error?.response?.data?.error ||
+                error?.response?.data?.message ||
+                (typeof error?.response?.data === 'string' ? error.response.data : undefined) ||
+                'Failed to create reservation';
             toast.error(errorMessage);
         }
     };
@@ -134,8 +130,8 @@ export default function NewReservationDialog() {
                     <DialogHeader>
                         <DialogTitle>Create a new Reservation</DialogTitle>
                         <DialogDescription>
-                            Fill out the form below to create a new reservation. Ensure all
-                            fields are filled out correctly.
+                            Fill out the form below to create a new reservation. Ensure all fields
+                            are filled out correctly.
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -149,7 +145,7 @@ export default function NewReservationDialog() {
                         />
                         <DialogFooter>
                             <DialogClose asChild>
-                                <Button variant={"secondary"}>Cancel</Button>
+                                <Button variant={'secondary'}>Cancel</Button>
                             </DialogClose>
                             <Button type="submit" className="w-full sm:w-auto">
                                 Create
@@ -170,14 +166,14 @@ function NewReservation({
     rooms,
     loadingRooms,
 }: {
-    register: ReturnType<typeof useForm<ReservationDTO>>["register"];
-    watch: ReturnType<typeof useForm<ReservationDTO>>["watch"];
-    setValue: ReturnType<typeof useForm<ReservationDTO>>["setValue"];
+    register: ReturnType<typeof useForm<ReservationDTO>>['register'];
+    watch: ReturnType<typeof useForm<ReservationDTO>>['watch'];
+    setValue: ReturnType<typeof useForm<ReservationDTO>>['setValue'];
     errors: FieldErrors<ReservationDTO>;
     rooms: Room[];
     loadingRooms: boolean;
 }) {
-    const selectedRoomId = watch("roomId");
+    const selectedRoomId = watch('roomId');
     const selectedRoom = rooms.find((room) => room.id === selectedRoomId);
 
     return (
@@ -190,12 +186,12 @@ function NewReservation({
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
-                                data-empty={!watch("date")}
+                                data-empty={!watch('date')}
                                 className="data-[empty=true]:text-muted-foreground w-full justify-start text-left font-normal"
                             >
                                 <CalendarIcon />
-                                {watch("date") ? (
-                                    format(new Date(watch("date")), "PPP")
+                                {watch('date') ? (
+                                    format(new Date(watch('date')), 'PPP')
                                 ) : (
                                     <span>Pick a date</span>
                                 )}
@@ -204,13 +200,17 @@ function NewReservation({
                         <PopoverContent className="w-auto p-0">
                             <Calendar
                                 mode="single"
-                                selected={watch("date") ? new Date(watch("date")) : undefined}
-                                disabled={(date) =>
-                                    date < new Date(new Date().setHours(0, 0, 0, 0)) /* || date.getDay() === 0 || date.getDay() === 6*/ // TODO: Disable weekends if needed check with others
+                                selected={watch('date') ? new Date(watch('date')) : undefined}
+                                disabled={
+                                    (date) =>
+                                        date <
+                                        new Date(
+                                            new Date().setHours(0, 0, 0, 0)
+                                        ) /* || date.getDay() === 0 || date.getDay() === 6*/ // TODO: Disable weekends if needed check with others
                                 }
                                 onSelect={(date) => {
                                     if (date) {
-                                        setValue("date", formatDateString(date), {
+                                        setValue('date', formatDateString(date), {
                                             shouldValidate: true,
                                         });
                                     }
@@ -226,23 +226,21 @@ function NewReservation({
                 <div>
                     <Label>Room</Label>
                     <Select
-                        onValueChange={(val) =>
-                            setValue("roomId", val, { shouldValidate: true })
-                        }
+                        onValueChange={(val) => setValue('roomId', val, { shouldValidate: true })}
                         disabled={loadingRooms}
                         value={selectedRoomId}
                     >
                         <SelectTrigger
-                            {...register("roomId", {
-                                required: "Room is required",
+                            {...register('roomId', {
+                                required: 'Room is required',
                             })}
                         >
                             <span>
                                 {selectedRoom
                                     ? `Room ${selectedRoom.roomNumber}`
                                     : loadingRooms
-                                    ? "Loading rooms..."
-                                    : "Select a room"}
+                                      ? 'Loading rooms...'
+                                      : 'Select a room'}
                             </span>
                         </SelectTrigger>
                         <SelectContent>
@@ -252,7 +250,9 @@ function NewReservation({
                                 .map((room) => (
                                     <SelectItem key={room.id} value={room.id}>
                                         <div className="flex flex-col gap-1">
-                                            <span className="font-medium">Room {room.roomNumber}</span>
+                                            <span className="font-medium">
+                                                Room {room.roomNumber}
+                                            </span>
                                             <div className="flex flex-wrap gap-1 mt-1">
                                                 {room.roomFeatures.map((feature) => (
                                                     <FeatureBadge key={feature} feature={feature} />
@@ -264,9 +264,7 @@ function NewReservation({
                         </SelectContent>
                     </Select>
                     {errors.roomId && (
-                        <span className="text-destructive text-xs">
-                            {errors.roomId.message}
-                        </span>
+                        <span className="text-destructive text-xs">{errors.roomId.message}</span>
                     )}
                 </div>
                 {/* Start Time Field */}
@@ -274,15 +272,15 @@ function NewReservation({
                     <Label>Start Time</Label>
                     <Select
                         onValueChange={(val) =>
-                            setValue("startTime", val, { shouldValidate: true })
+                            setValue('startTime', val, { shouldValidate: true })
                         }
                     >
                         <SelectTrigger
-                            {...register("startTime", {
-                                required: "Start time is required",
+                            {...register('startTime', {
+                                required: 'Start time is required',
                                 pattern: {
                                     value: /^([01]\d|2[0-3]):[0-5]\d$/,
-                                    message: "Invalid time format",
+                                    message: 'Invalid time format',
                                 },
                             })}
                         >
@@ -291,8 +289,8 @@ function NewReservation({
                         <SelectContent>
                             {Array.from({ length: 31 }, (_, i) => {
                                 const hour = 6 + Math.floor(i / 2);
-                                const minute = i % 2 === 0 ? "00" : "30";
-                                const time = `${hour.toString().padStart(2, "0")}:${minute}`;
+                                const minute = i % 2 === 0 ? '00' : '30';
+                                const time = `${hour.toString().padStart(2, '0')}:${minute}`;
                                 return (
                                     <SelectItem key={time} value={time}>
                                         {time}
@@ -302,25 +300,21 @@ function NewReservation({
                         </SelectContent>
                     </Select>
                     {errors.startTime && (
-                        <span className="text-destructive text-xs">
-                            {errors.startTime.message}
-                        </span>
+                        <span className="text-destructive text-xs">{errors.startTime.message}</span>
                     )}
                 </div>
                 {/* End Time Field */}
                 <div>
                     <Label>End Time</Label>
                     <Select
-                        onValueChange={(val) =>
-                            setValue("endTime", val, { shouldValidate: true })
-                        }
+                        onValueChange={(val) => setValue('endTime', val, { shouldValidate: true })}
                     >
                         <SelectTrigger
-                            {...register("endTime", {
-                                required: "End time is required",
+                            {...register('endTime', {
+                                required: 'End time is required',
                                 pattern: {
                                     value: /^([01]\d|2[0-3]):[0-5]\d$/,
-                                    message: "Invalid time format",
+                                    message: 'Invalid time format',
                                 },
                             })}
                         >
@@ -329,8 +323,8 @@ function NewReservation({
                         <SelectContent>
                             {Array.from({ length: 31 }, (_, i) => {
                                 const hour = 6 + Math.floor(i / 2);
-                                const minute = i % 2 === 0 ? "00" : "30";
-                                const time = `${hour.toString().padStart(2, "0")}:${minute}`;
+                                const minute = i % 2 === 0 ? '00' : '30';
+                                const time = `${hour.toString().padStart(2, '0')}:${minute}`;
                                 return (
                                     <SelectItem key={time} value={time}>
                                         {time}
@@ -340,9 +334,7 @@ function NewReservation({
                         </SelectContent>
                     </Select>
                     {errors.endTime && (
-                        <span className="text-destructive text-xs">
-                            {errors.endTime.message}
-                        </span>
+                        <span className="text-destructive text-xs">{errors.endTime.message}</span>
                     )}
                 </div>
             </div>
@@ -350,17 +342,15 @@ function NewReservation({
             <div>
                 <Label>Description</Label>
                 <Textarea
-                    {...register("description", {
-                        required: "Description is required",
-                        maxLength: { value: 200, message: "Max 200 characters" },
+                    {...register('description', {
+                        required: 'Description is required',
+                        maxLength: { value: 200, message: 'Max 200 characters' },
                     })}
                     placeholder="Enter a description for your reservation"
                     className="resize-none"
                 />
                 {errors.description && (
-                    <span className="text-destructive text-xs">
-                        {errors.description.message}
-                    </span>
+                    <span className="text-destructive text-xs">{errors.description.message}</span>
                 )}
                 <p className="text-sm text-muted-foreground">
                     Briefly describe the purpose of your reservation.
@@ -371,19 +361,17 @@ function NewReservation({
                 <Label>Participants</Label>
                 <Input
                     placeholder="John, Jane, Alex"
-                    {...register("participants", {
-                        required: "Participants are required",
-                        maxLength: { value: 255, message: "Max 255 characters" },
+                    {...register('participants', {
+                        required: 'Participants are required',
+                        maxLength: { value: 255, message: 'Max 255 characters' },
                         pattern: {
                             value: /^[A-Za-zÄäÖöÜüßèéêç\s]+(,\s*[A-Za-zÄäÖöÜüßèéêç\s]+)*$/,
-                            message: "Only letters, spaces, and commas allowed",
+                            message: 'Only letters, spaces, and commas allowed',
                         },
                     })}
                 />
                 {errors.participants && (
-                    <span className="text-destructive text-xs">
-                        {errors.participants.message}
-                    </span>
+                    <span className="text-destructive text-xs">{errors.participants.message}</span>
                 )}
                 <p className="text-sm text-muted-foreground">
                     Enter participant names separated by commas (letters only).
@@ -396,10 +384,10 @@ function NewReservation({
 function formatDateString(dateString: string | Date): string {
     const date = new Date(dateString);
     return (
-        date.toLocaleString("default", { year: "numeric" }) +
-        "-" +
-        date.toLocaleString("default", { month: "2-digit" }) +
-        "-" +
-        date.toLocaleString("default", { day: "2-digit" })
+        date.toLocaleString('default', { year: 'numeric' }) +
+        '-' +
+        date.toLocaleString('default', { month: '2-digit' }) +
+        '-' +
+        date.toLocaleString('default', { day: '2-digit' })
     );
 }

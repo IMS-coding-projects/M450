@@ -1,7 +1,5 @@
-
-import github_light from "/github-logo-light.svg";
-import github_dark from "/github-logo-dark.svg";
-
+import github_light from '/github-logo-light.svg';
+import github_dark from '/github-logo-dark.svg';
 
 export default function Footer() {
     return (
@@ -12,14 +10,18 @@ export default function Footer() {
                     <p>&copy; {new Date().getFullYear()} OrariAperti. All rights reserved.</p>
                     <img
                         className="hover:cursor-pointer hidden dark:block"
-                        onClick={() => window.open('https://github.com/IMS-coding-projects/m223', '_blank')}
+                        onClick={() =>
+                            window.open('https://github.com/IMS-coding-projects/m223', '_blank')
+                        }
                         src={github_dark}
                         alt="GitHub Repository"
                         style={{ width: '25px', height: '25px' }}
                     />
                     <img
                         className="hover:cursor-pointer dark:hidden"
-                        onClick={() => window.open('https://github.com/IMS-coding-projects/m223', '_blank')}
+                        onClick={() =>
+                            window.open('https://github.com/IMS-coding-projects/m223', '_blank')
+                        }
                         src={github_light}
                         alt="GitHub Repository"
                         style={{ width: '25px', height: '25px' }}
@@ -29,4 +31,3 @@ export default function Footer() {
         </>
     );
 }
-

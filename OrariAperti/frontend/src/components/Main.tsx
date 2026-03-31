@@ -1,9 +1,9 @@
-import { useState } from "react";
-import AccessKeys from "@/components/AccessKeys.tsx";
-import CurrentReservation from "@/components/CurrentReservation.tsx";
-import type { Reservation } from "@/types/types";
-import { Separator } from "@/components/ui/separator.tsx";
-import FAQAccordion from "@/components/FAQAccordion.tsx";
+import { useState } from 'react';
+import AccessKeys from '@/components/AccessKeys.tsx';
+import CurrentReservation from '@/components/CurrentReservation.tsx';
+import type { Reservation } from '@/types/types';
+import { Separator } from '@/components/ui/separator.tsx';
+import FAQAccordion from '@/components/FAQAccordion.tsx';
 
 function getQueryParam(param: string) {
     const params = new URLSearchParams(window.location.search);
@@ -18,8 +18,8 @@ function getQueryParam(param: string) {
 export default function MainUIOnly() {
     const [reservation, setReservation] = useState<Reservation | undefined>(undefined);
 
-    const publicKey = getQueryParam("publicKey");
-    const privateKey = getQueryParam("privateKey");
+    const publicKey = getQueryParam('publicKey');
+    const privateKey = getQueryParam('privateKey');
 
     return (
         <main className="container mx-auto p-6 w-full">
@@ -30,13 +30,13 @@ export default function MainUIOnly() {
                         publicKey={publicKey || undefined}
                         privateKey={privateKey || undefined}
                     />
-                </div>      
+                </div>
                 <div className="w-full md:w-2/3 flex-grow h-full md:h-auto">
-                    <CurrentReservation reservation={reservation}/>
+                    <CurrentReservation reservation={reservation} />
                 </div>
             </div>
             <Separator className="my-4" />
-            <FAQAccordion/>
+            <FAQAccordion />
         </main>
     );
 }

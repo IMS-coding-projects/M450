@@ -415,3 +415,123 @@ npm run test
 # 1. Start backend server (e.g., via Docker or `./mvnw spring-boot:run`)
 # 2. Run tests.js via Node.js or browser console
 ```
+
+---
+
+## 3. Test-Driven Development (TDD)
+
+### 3.1 What is TDD in this Project?
+
+Test-Driven Development (TDD) is the practice of writing a failing test **before** writing the production code that makes it pass. In OrariAperti, TDD is applied to the backend controller layer. Every new feature or business rule must be expressed as a JUnit test first — the implementation follows only once the test is written and confirmed to fail.
+
+The cycle followed in this project is:
+
+```
+1. RED   — Write a failing test that describes the desired behaviour
+2. GREEN — Write the minimal production code to make the test pass
+3. REFACTOR — Clean up code without breaking the test
+```
+
+This ensures all existing tests in `ReservationControllerTest` and `RoomControllerTest` represent a specification, not just a safety net added after the fact.
+
+---
+
+### 3.2 TDD Rules for This Project
+
+The following rules apply to all contributors working on OrariAperti:
+
+1. **Test first** — No new method or endpoint behaviour may be added to a controller without a corresponding test written beforehand.
+2. **One failing test at a time** — Only write enough production code to make the currently failing test pass. Do not anticipate future tests.
+3. **Tests are the specification** — If the expected behaviour is unclear, the test defines it. The test method name must read like a sentence describing the behaviour (e.g. `createReservationReturnsBadRequestWhenTimeOverlaps`).
+4. **No logic without a test** — Validation rules (participant name format, time overlap detection), authorization checks (privateKey matching), and HTTP status mappings must each be covered by at least one dedicated test.
+5. **Mocks over real dependencies** — Controllers are tested in isolation using `@MockitoBean`. Tests must never depend on a running database or external service.
+6. **Green before merge** — All tests must pass (`./mvnw test`) before a branch is merged into `main`.
+
+---
+
+### 3.3 TDD Workflow per Feature
+
+When adding a new feature (e.g. a new validation rule or endpoint), follow these steps:
+
+#### Step 1 — Define the behaviour as a test
+
+Write a new `@Test` method in the appropriate test class (`ReservationControllerTest` or `RoomControllerTest`). The method name must follow the pattern:
+
+```
+<methodUnderTest><Condition><ExpectedOutcome>
+```
+
+Example:
+```java
+@Test
+void createReservationReturnsBadRequestWhenEndTimeIsBeforeStartTime() throws Exception {
+    // Arrange: DTO with endTime before startTime
+    // Act & Assert: POST → expect HTTP 400
+}
+```
+
+Run the test suite — this new test must **fail** (RED).
+
+#### Step 2 — Implement the minimum production code
+
+Add or modify only the code in the controller (or entity/validator) necessary to make the failing test pass. Do not write more logic than needed.
+
+Run the test suite — all tests must now **pass** (GREEN).
+
+#### Step 3 — Refactor
+
+Clean up the implementation: extract methods, improve naming, remove duplication. Re-run the tests after every refactoring step to ensure nothing breaks.
+
+---
+
+### 3.4 TDD Coverage Targets
+
+The following areas of the application are governed by the TDD requirement. Each listed behaviour must have a dedicated, named test before the corresponding code is written or modified.
+
+| Area | Required Tests | Current Status |
+|---|---|---|
+| `GET /api/reservation` — no keys | TC-R01 | ✅ |
+| `GET /api/reservation` — valid privateKey | TC-R02 | ✅ |
+| `GET /api/reservation` — unknown publicKey | TC-R03 | ✅ |
+| `POST /api/reservation` — invalid participants | TC-R04 | ✅ |
+| `POST /api/reservation` — time overlap | TC-R05 | ✅ |
+| `POST /api/reservation` — valid input | TC-R06 | ✅ |
+| `DELETE /api/reservation/{id}` — no key | TC-R07 | ✅ |
+| `DELETE /api/reservation/{id}` — wrong key | TC-R08 | ✅ |
+| `DELETE /api/reservation/{id}` — correct key | TC-R09 | ✅ |
+| `PUT /api/reservation/{id}` — no key | TC-R10 | ✅ |
+| `PUT /api/reservation/{id}` — invalid participants | TC-R11 | ✅ |
+| `PUT /api/reservation/{id}` — valid update | TC-R12 | ✅ |
+| `GET /api/room` — no rooms | TC-ROOM01 | ✅ |
+| `GET /api/room` — rooms exist | TC-ROOM02 | ✅ |
+| `POST /api/reservation` — endTime before startTime | TC-R13 | ⬜ Pending |
+| `POST /api/reservation` — room does not exist | TC-R14 | ⬜ Pending |
+| `PUT /api/reservation/{id}` — reservation not found | TC-R15 | ⬜ Pending |
+
+Pending tests (⬜) represent **the next TDD cycle** — they must be written as failing tests before the corresponding validation logic is added to the controllers.
+
+---
+
+### 3.5 Naming Conventions
+
+All test methods must follow this naming convention to remain readable as a specification:
+
+```
+<subjectMethod><Context><ExpectedBehaviour>
+```
+
+| Part | Example |
+|---|---|
+| Subject method | `createReservation`, `deleteReservation`, `getRooms` |
+| Context | `WhenTimeOverlaps`, `WithNoPrivateKey`, `WhenNoRoomsExist` |
+| Expected behaviour | `ReturnsBadRequest`, `ReturnsUnauthorized`, `ReturnsNotFound`, `PersistsAndReturnsKeys` |
+
+Full example: `createReservationReturnsBadRequestWhenTimeOverlaps`
+
+Avoid generic names like `test1`, `testPost`, or `shouldWork`.
+
+---
+
+### 3.6 TDD and the Smoke Test (`tests.js`)
+
+The `tests.js` script is **not** part of the TDD cycle. It is a manual integration check used to verify the live system end-to-end after deployment. It does not replace unit tests and must not be used as the primary specification tool. Any behaviour it covers should already be documented by a corresponding unit test in the TDD coverage table above.
